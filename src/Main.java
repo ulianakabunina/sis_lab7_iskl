@@ -1,43 +1,40 @@
-public class Main {
-    private boolean brainActive = false;
+import java.util.Scanner;
 
-    public void startCoding() throws BrainNotFoundException {
-        if (!brainActive) {
-            throw new BrainNotFoundException();
+public class Main {
+
+    public static class NotEnoughMarshmallowsException extends Exception {
+        public NotEnoughMarshmallowsException(String message) {
+            super(message);
         }
-        System.out.println("💻 Код пишется... вроде бы осмысленно!");
     }
 
-    public void rebootBrain() {
-        System.out.println("🔄 Перезагрузка мозга...");
-        brainActive = true;
-        System.out.println("✅ Мозг снова в сети!");
+    public static class MarshmallowValidator {
+        private static final int MIN_MARSHMALLOWS = 3;
+
+        public static void bringMarshmallows(int count) throws NotEnoughMarshmallowsException {
+            if (count < MIN_MARSHMALLOWS) {
+                throw new NotEnoughMarshmallowsException(
+                        "Ты принёс всего " + count + " зефирки(у/ок)! А нужно минимум " + MIN_MARSHMALLOWS + "!\n" +
+                                "Подружка расстроена. Встреча отменяется."
+                );
+            }
+        }
     }
 
     public static void main(String[] args) {
-        Main dev = new Main();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Сколько зефирок ты взял для подружки? ");
+        int marshmallows = scanner.nextInt();
+
         try {
-            dev.startCoding();
-        } catch (BrainNotFoundException e) {
+            MarshmallowValidator.bringMarshmallows(marshmallows);
+            System.out.println("Подружка в восторге! Встреча состоится. Зефирки — идеальный выбор!");
+        } catch (NotEnoughMarshmallowsException e) {
+            System.out.println("ОЙ-ОЙ:");
             System.out.println(e.getMessage());
-            dev.rebootBrain();
-            try {
-                dev.startCoding();
-            } catch (BrainNotFoundException ignored) {}
         }
+
+        scanner.close();
     }
 }
-
-class BrainNotFoundException extends Exception {
-    public BrainNotFoundException() {
-        super("""
-              🧠 Кажется, мозг временно отключился.
-              Попробуйте перезапустить разработчика или дать ему кофе.
-              """);
-    }
-
-    public BrainNotFoundException(String details) {
-        super("🧠 " + details);
-    }
-}
-
