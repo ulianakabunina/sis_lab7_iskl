@@ -15,7 +15,7 @@ public class Main {
             if (count < MIN_MARSHMALLOWS) {
                 throw new NotEnoughMarshmallowsException(
                         "Ты принёс всего " + count + " зефирки(у/ок)! А нужно минимум " + MIN_MARSHMALLOWS + "!\n" +
-                                "Подружка расстроена. Встреча отменяется."
+                                "Подружка расстроена. Встреча отменяется("
                 );
             }
         }
