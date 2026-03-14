@@ -12,12 +12,20 @@ public class Main {
         private static final int MIN_MARSHMALLOWS = 3;
 
         public static void bringMarshmallows(int count) throws NotEnoughMarshmallowsException {
+
+            Debugger.log("Проверяем количество зефирок");
+            Debugger.logVariable("count", count);
+
             if (count < MIN_MARSHMALLOWS) {
+                Debugger.logError("Недостаточно зефирок");
+
                 throw new NotEnoughMarshmallowsException(
                         "Ты принёс всего " + count + " зефирки(у/ок)! А нужно минимум " + MIN_MARSHMALLOWS + "!\n" +
                                 "Подружка расстроена. Встреча отменяется("
                 );
             }
+
+            Debugger.log("Проверка успешно пройдена");
         }
     }
 
@@ -27,14 +35,19 @@ public class Main {
         System.out.print("Сколько зефирок ты взял для подружки? ");
         int marshmallows = scanner.nextInt();
 
+        Debugger.logVariable("marshmallows (input)", marshmallows);
+
         try {
             MarshmallowValidator.bringMarshmallows(marshmallows);
             System.out.println("Подружка в восторге! Встреча состоится. Зефирки — идеальный выбор!");
         } catch (NotEnoughMarshmallowsException e) {
             System.out.println("ОЙ-ОЙ:");
             System.out.println(e.getMessage());
+
+            Debugger.printStackTrace(e);
         }
 
         scanner.close();
+        Debugger.log("Программа завершена");
     }
 }
